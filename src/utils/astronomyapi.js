@@ -8,23 +8,26 @@ const checkResponse = (res) => {
   return res.ok ? res.json() : Promise.reject(`Error ${res.status}`);
 };
 
-const getPositions = ({ search, lat, long, from, to, time }) => {
-  let params = new URLSearchParams("");
+const getPositions = ({ search, lat, long, from, to, time, elevation }) => {
+  let params = new URLSearchParams();
 
   // Add a third parameter.
-  params.set("search", search);
-  params.set("longitude", long);
-  params.set("latitude", lat);
-  params.set("from_date", from);
-  params.set("to_date", to);
-  params.set("time", time);
+  //if (search) params.set("search", search);
+  if (long) params.set("longitude", long);
+  if (lat) params.set("latitude", lat);
+  if (from) params.set("from_date", from);
+  if (to) params.set("to_date", to);
+  if (time) params.set("time", time);
+  if (elevation) params.set("elevation", elevation);
+
+  //if (!search) params.set("search", "planets");
   return fetch(
-    `https://api.astronomyapi.com/api/v2/bodies/positions?${params.toString()}`,
+    `https://api.astronomyapi.com/api/v2/bodies/positions/${search}?${params.toString()}`,
     {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        authorization: authString,
+        Authorization: `Basic ${authString}`,
       },
     }
   ).then(checkResponse);

@@ -1,7 +1,7 @@
 import "./RegisterModal.css";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
-function RegisterModal({ handleModalClose, isOpen }) {
+function RegisterModal({ handleModalClose, isOpen, handleLoginSwitch }) {
   return (
     <ModalWithForm
       handleModalClose={handleModalClose}
@@ -36,6 +36,19 @@ function RegisterModal({ handleModalClose, isOpen }) {
             className="modal__input"
           />
         </label>
+        <div className="button__container">
+          <button type="submit" className="modal__submit-btn">
+            Sign up
+          </button>
+          <p className="modal__button-text">Already have an account &#8594;</p>
+          <button
+            type="button"
+            onClick={handleLoginSwitch}
+            className="modal__change-form"
+          >
+            sign in
+          </button>
+        </div>
       </form>
     </ModalWithForm>
   );

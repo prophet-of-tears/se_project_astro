@@ -1,5 +1,4 @@
 import "./Main.css";
-import About from "../About/About";
 
 function Main({ handleSearch }) {
   const handleFormSubmit = (e) => {
@@ -7,12 +6,13 @@ function Main({ handleSearch }) {
     console.log(e.target);
 
     const search = e.target.search.value;
-    const lat = e.target.lat;
-    const long = e.target.long;
-    const from = e.target.from;
-    const to = e.target.search;
-    const time = e.target.search;
-    handleSearch({ search, lat, long, from, to, time });
+    const lat = e.target.latitude.value;
+    const long = e.target.longitude.value;
+    const from = e.target.from_date.value;
+    const to = e.target.to_date.value;
+    const time = e.target.time.value;
+    const elevation = e.target.elevation.value;
+    handleSearch({ search, lat, long, from, to, time, elevation });
   };
 
   return (
@@ -41,6 +41,16 @@ function Main({ handleSearch }) {
               placeholder="North & South"
               className="searchbar__input"
             />
+            <label htmlFor="elevation" className="searchbar__label">
+              elevation
+            </label>
+            <input
+              type="text"
+              name="elevation"
+              id="elevation"
+              default="0"
+              className="searchbar__input"
+            />
             <label htmlFor="from_date" className="searchbar__label">
               From Date
             </label>
@@ -66,6 +76,8 @@ function Main({ handleSearch }) {
               type="time"
               name="time"
               id="time"
+              defaultValue="11:59:59"
+              step="1"
               className="searchbar__input"
             />
             <label htmlFor="search" className="searchbar__label">
@@ -83,7 +95,6 @@ function Main({ handleSearch }) {
           </form>
         </search>
       </div>
-      <About />
     </div>
   );
 }

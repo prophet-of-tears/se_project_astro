@@ -49,3 +49,22 @@
 .display__title {
   text-align: center;
 }
+
+.display__info {
+  margin-left: 8px;
+  font-size: 16px;
+  line-height: 24px;
+  border-bottom: 1px solid black;
+}
+
+.display__azimuth:hover {
+  color: rgb(144, 144, 24);
+}
+
+.display__horizontal:hover {
+  color: rgb(144, 144, 24);
+}
+
+.display__au:hover {
+  color: rgb(144, 144, 24);
+}

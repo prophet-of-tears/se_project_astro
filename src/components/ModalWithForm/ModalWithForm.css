@@ -21,9 +21,9 @@
   background-color: white;
 
   width: 490px;
-  height: 380px;
+  height: fit-content;
   border-radius: 20px;
-  padding: 4px 16px;
+  padding: 4px 16px 40px;
   box-sizing: border-box;
   background-color: rgb(217, 228, 187);
 }

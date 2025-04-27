@@ -1,4 +1,5 @@
 import "./Header.css";
+import { Link } from "react-router-dom";
 
 function Header({ handleRegisterOpen, handleLoginOpen, handleHeaderNavigate }) {
   return (
@@ -13,7 +14,11 @@ function Header({ handleRegisterOpen, handleLoginOpen, handleHeaderNavigate }) {
         <li onClick={handleLoginOpen} className="header__sign-in">
           Sign in
         </li>
-        <li className="header__about">About this site</li>
+        <li className="header__about">
+          <Link className="header__about-link" to={"/about"}>
+            About this site
+          </Link>
+        </li>
       </ul>
     </header>
   );

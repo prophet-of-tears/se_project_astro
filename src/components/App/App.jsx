@@ -12,13 +12,21 @@ import About from "../About/About";
 import AstronomicalUnitModal from "../AstronomicalUnitModal/AstronomicalUnitModal";
 import AzimuthModal from "../AzimuthModal/AzimuthModal";
 import HorizontalLocationModal from "../HorizontalLocationModal/HorizontalLocationModal";
+import Preloader from "../Preloader/Preloader";
+import auth from "../../utils/auth";
 import * as api from "../../utils/astronomyapi";
+import authorize from "../../utils/auth";
+import checkToken from "../../utils/auth";
 
 function App() {
   const [activeModal, setActiveModal] = useState("");
   const [planetName, setPlanetName] = useState("");
   const [planetInfo, setPlanetInfo] = useState({});
   const [userInputInfo, setUserInputInfo] = useState({});
+  const [preloader, setPreloader] = useState(false);
+  const [dataDisplayError, setDataDisplayError] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [isLoggedIn, setIsLoggendIn] = useState(false);
 
   const navigate = useNavigate();
 
@@ -61,6 +69,15 @@ function App() {
     navigate("/");
   };
 
+  const handleReturn = () => {
+    setDataDisplayError(false);
+  };
+
+  const handleDisplayError = () => {
+    setDataDisplayError(true);
+    console.log("display error activated");
+  };
+
   const handleSearch = ({ search, lat, long, from, to, time, elevation }) => {
     setUserInputInfo({ search, lat, long, from, to, time, elevation });
     api
@@ -70,21 +87,14 @@ function App() {
         setPlanetName(search);
         navigate("/infoPage");
         parsePlanetInfo(data);
+        setPreloader(true);
       })
       .catch((error) => {
+        setPreloader(false);
+        handleDisplayError();
         console.error("error finding planet data", error);
       });
   };
-
-  // const checkInputInfo = () => {
-  //   const keys = Object.keys(userInputInfo);
-  //   const requiredFields = ["lat", "long", "from", "to", "time", "elevation"];
-  //   const isMissingAny = requiredFields.some((field) => {
-  //     !keys.includes(field);
-  //   });
-  //   console.log(isMissingAny);
-  //   return isMissingAny;
-  // };
 
   useEffect(() => {
     api
@@ -92,11 +102,20 @@ function App() {
       .then((data) => {
         console.log(data);
         parsePlanetInfo(data);
+        setPreloader(false);
       })
       .catch((err) => {
         console.error(err);
       });
   }, [planetName]);
+
+  function enablePreloader() {
+    if (!handleSearch) {
+      setPreloader(true);
+    } else {
+      setPreloader(false);
+    }
+  }
 
   function parsePlanetInfo(data) {
     setPlanetInfo({
@@ -109,33 +128,69 @@ function App() {
     });
   }
 
+  const handleLogin = ({ email, password }) => {
+    if (!email || !password) {
+      return;
+    }
+    auth
+      .auth({ email, password })
+      .then(async (data) => {
+        if (data.token) {
+          console.log("signin successful");
+          const userInfo = await getUserInfo(data.token);
+          setToken(data.token);
+          setCurrentUser(userInfo);
+          setIsLoggedIn(true);
+          handleModalClose();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div className="page">
-      <div className="page__content">
-        <Header
-          handleRegisterOpen={handleRegisterOpen}
-          handleLoginOpen={handleLoginOpen}
-          handleHeaderNavigate={handleHeaderNavigate}
-        />
-
-        <Routes>
-          <Route path="/" element={<Main handleSearch={handleSearch} />} />
-          <Route path="/about" element={<About />} />
-          <Route
-            path="/infoPage"
-            element={
-              <DisplayPage
-                setPlanetName={setPlanetName}
-                planetName={planetName}
-                planetInfo={planetInfo}
-                handleAstronomicalUnit={handleAstronomicalUnit}
-                handleHorizontalLocation={handleHorizontalLocation}
-                handleAzimuth={handleAzimuth}
-              />
-            }
+      {preloader ? (
+        <Preloader enablePreloader={enablePreloader} />
+      ) : (
+        <div className="page__content">
+          <Header
+            handleRegisterOpen={handleRegisterOpen}
+            handleLoginOpen={handleLoginOpen}
+            handleHeaderNavigate={handleHeaderNavigate}
           />
-        </Routes>
-      </div>
+
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Main
+                  displayError={dataDisplayError}
+                  handleSearch={handleSearch}
+                  handleReturn={handleReturn}
+                />
+              }
+            />
+            <Route path="/about" element={<About />} />
+            <Route
+              path="/infoPage"
+              element={
+                <DisplayPage
+                  setPlanetName={setPlanetName}
+                  planetName={planetName}
+                  planetInfo={planetInfo}
+                  handleAstronomicalUnit={handleAstronomicalUnit}
+                  handleHorizontalLocation={handleHorizontalLocation}
+                  handleAzimuth={handleAzimuth}
+                  enablePreloader={enablePreloader}
+                  DataError={dataDisplayError}
+                />
+              }
+            />
+          </Routes>
+        </div>
+      )}
       <Footer />
       <LoginModal
         handleModalClose={handleModalClose}

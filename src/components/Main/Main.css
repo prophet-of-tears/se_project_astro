@@ -43,3 +43,19 @@
   transition-duration: 0.5s;
   border: 1px solid white;
 }
+
+.error {
+  position: fixed;
+  top: 280px;
+  left: 390px;
+  font-size: 20px;
+}
+
+.error__span {
+  color: rgb(29, 104, 4);
+  margin-left: 5px;
+}
+
+.error__span:hover {
+  color: rgba(29, 104, 4, 0.6);
+}

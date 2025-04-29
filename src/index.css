@@ -8,3 +8,8 @@
 @import url(./components/ModalWithForm/ModalWithForm.css);
 @import url(./components/DisplayPage/DisplayPage.css);
 @import url(./components/About/About.css);
+@import url(./components/Preloader//Preloader.css);
+@import url(./components/ModalWithDefinition/ModalWithDefinition.css);
+@import url(./components/HorizontalLocationModal/HorizontalLocationModal.css);
+@import url(./components/AzimuthModal/AzimuthModal.css);
+@import url(./components/AstronomicalUnitModal/AstronomicalUnitModal.css);

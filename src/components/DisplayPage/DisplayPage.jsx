@@ -1,4 +1,5 @@
 import "./DisplayPage.css";
+import Preloader from "../Preloader/Preloader";
 
 function DisplayPage({
   planetName,
@@ -7,6 +8,7 @@ function DisplayPage({
   handleAzimuth,
   handleAstronomicalUnit,
   handleHorizontalLocation,
+  displayError,
 }) {
   return (
     <div className="planets">
@@ -86,13 +88,14 @@ function DisplayPage({
       </div>
       <div className="display">
         <div className="display__container">
+          {/* <Preloader enablePreloader={enablePreloader} /> */}
           <h2 className="display__title">{planetName}</h2>
           <div className="display__info">{planetInfo.timeStamp}</div>
           <div
             onClick={handleAstronomicalUnit}
             className="display__info display__au"
           >
-            {planetInfo.distance}Au from Earth
+            Distance: {planetInfo.distance}AU from Earth
           </div>
           <div
             onClick={handleHorizontalLocation}

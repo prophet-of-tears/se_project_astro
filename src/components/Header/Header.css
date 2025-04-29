@@ -17,6 +17,10 @@
   font-weight: 300;
 }
 
+.header__about {
+  margin: 0;
+}
+
 .header__about-link {
   text-decoration: none;
   color: black;

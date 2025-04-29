@@ -13,10 +13,8 @@ import AstronomicalUnitModal from "../AstronomicalUnitModal/AstronomicalUnitModa
 import AzimuthModal from "../AzimuthModal/AzimuthModal";
 import HorizontalLocationModal from "../HorizontalLocationModal/HorizontalLocationModal";
 import Preloader from "../Preloader/Preloader";
-import auth from "../../utils/auth";
+
 import * as api from "../../utils/astronomyapi";
-import authorize from "../../utils/auth";
-import checkToken from "../../utils/auth";
 
 function App() {
   const [activeModal, setActiveModal] = useState("");
@@ -25,8 +23,6 @@ function App() {
   const [userInputInfo, setUserInputInfo] = useState({});
   const [preloader, setPreloader] = useState(false);
   const [dataDisplayError, setDataDisplayError] = useState(false);
-  const [currentUser, setCurrentUser] = useState(null);
-  const [isLoggedIn, setIsLoggendIn] = useState(false);
 
   const navigate = useNavigate();
 
@@ -127,27 +123,6 @@ function App() {
         data.data.table.rows[0].cells[0].position.horizontal.azimuth.degrees,
     });
   }
-
-  const handleLogin = ({ email, password }) => {
-    if (!email || !password) {
-      return;
-    }
-    auth
-      .auth({ email, password })
-      .then(async (data) => {
-        if (data.token) {
-          console.log("signin successful");
-          const userInfo = await getUserInfo(data.token);
-          setToken(data.token);
-          setCurrentUser(userInfo);
-          setIsLoggedIn(true);
-          handleModalClose();
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
 
   return (
     <div className="page">

@@ -1,0 +1,11 @@
+.about {
+  margin-top: 100px;
+}
+
+.about__title {
+  text-align: center;
+}
+
+.about__content {
+  margin: 0 300px 0;
+}

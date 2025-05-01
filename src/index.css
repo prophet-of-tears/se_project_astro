@@ -1,0 +1,15 @@
+@import url(./vendor/normalize.css);
+@import url(./components/Header/Header.css);
+@import url(./components/App/App.css);
+@import url(./components/Main/Main.css);
+@import url(./components/Footer/Footer.css);
+@import url(./components/LoginModal/LoginModal.css);
+@import url(./components/RegisterModal/RegisterModal.css);
+@import url(./components/ModalWithForm/ModalWithForm.css);
+@import url(./components/DisplayPage/DisplayPage.css);
+@import url(./components/About/About.css);
+@import url(./components/Preloader//Preloader.css);
+@import url(./components/ModalWithDefinition/ModalWithDefinition.css);
+@import url(./components/HorizontalLocationModal/HorizontalLocationModal.css);
+@import url(./components/AzimuthModal/AzimuthModal.css);
+@import url(./components/AstronomicalUnitModal/AstronomicalUnitModal.css);

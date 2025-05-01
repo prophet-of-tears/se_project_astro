@@ -1,0 +1,44 @@
+.modal {
+  background-color: rgba(0, 0, 0, 0.273);
+  visibility: hidden;
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal_opened {
+  visibility: visible;
+}
+
+.modal__container {
+  background-color: white;
+
+  width: 490px;
+  height: fit-content;
+  border-radius: 20px;
+  padding: 4px 16px 40px;
+  box-sizing: border-box;
+  background-color: rgb(217, 228, 187);
+}
+
+.modal__header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal__close {
+  background-image: url(../../assets/formClose.svg);
+  background-repeat: no-repeat;
+  width: 18px;
+  height: 18px;
+  border: none;
+  background-color: transparent;
+  margin-top: 24px;
+}
